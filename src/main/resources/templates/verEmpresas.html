@@ -1,10 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
-        <meta charset="UTF-8">
-        <title>Empresas</title>
+        <title>Bootstrap Theme Simply Me</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <style>
+            a{
+                color: white;
+                text-decoration: none;
+            }
+        </style>
     </head>
     <body>
-
+        <div class="container">
+            <table class="table table-bordered">
+                <tr>
+                    <th th:text="Id"></th>
+                    <th th:text="Nombre"></th>
+                    <th th:text="Dirección"></th>
+                    <th th:text="Teléfono"></th>
+                    <th th:text="Nit"></th>
+                    <th th:text="Editar"></th>
+                    <th th:text="Eliminar"></th>
+                </tr>
+                <tr th:each="empresa : ${empresas}">
+                    <td th:text="${empresa.getId()}"></td>
+                    <td th:text="${empresa.getNombre()}"></td>
+                    <td th:text="${empresa.getDireccion()}"></td>
+                    <td th:text="${empresa.getTelefono()}"></td>
+                    <td th:text="${empresa.getNit()}"></td>
+                    <td><button type="button" class="btn btn-warning"><a th:href="@{/EditarEmpresa/{id}(id=${empresa.getId()})}" th:text="Editar"></a></button></td>
+                    <td><button type="button" class="btn btn-danger"><a th:href="@{/EliminarEmpresa/{id}(id=${empresa.getId()})}" th:text="Eliminar"></a></button></td>
+                </tr>
+            </table>
+            
+            <button type="button" class="btn btn-info"><a th:href="@{/AgregarEmpresa}">Agregar nueva empresa</a></button>
+        </div>
+        <script th:inline="javascript">
+            window.onload=function(){
+                let msg = [[${mensaje}]];
+                if(msg == "saveOK"){
+                    Command : toastr["success"]("Empresa creada con éxito")
+                }
+                else if(msg == "updateOK"){
+                    Command : toastr["success"]("Empresa actualizada con éxito")
+                }
+                else if(msg == "deleteOK"){
+                    Command : toastr["warning"]("Empresa eliminada con éxito")
+                }
+                else if(msg == "deleteError"){
+                    Command : toastr["error"]("Empresa no se pudo eliminar")
+                }
+                toastr.options={
+                    "positionClass": "toast-top-right",
+                    "showDuration": "3000",
+                    "showMethod": "fadein",
+                    "hideMethod": "fadeOut"
+                }
+            }
+        </script>
     </body>
 </html>

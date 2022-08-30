@@ -12,7 +12,7 @@ public class ExchangeHouseApplication {
 
     @GetMapping("/hello")
     public String hello(){
-        return "Hola ciclo 3..... saldremos vivos de esto";
+        return "verEmpresas";
     }
 
     @GetMapping("/test")
