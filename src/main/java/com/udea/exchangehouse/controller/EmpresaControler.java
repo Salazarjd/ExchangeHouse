@@ -1,20 +1,24 @@
 package com.udea.exchangehouse.controller;
 
+import com.udea.exchangehouse.models.Empleado;
 import com.udea.exchangehouse.models.Empresa;
+import com.udea.exchangehouse.service.EmpleadoService;
 import com.udea.exchangehouse.service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class EmpresaControler {
 
     @Autowired
     EmpresaService empresaService;
+
+    @Autowired
+    EmpleadoService empleadoService;
 
     @GetMapping("/enterprises")
     public List<Empresa> verEmpresas(){
@@ -53,5 +57,25 @@ public class EmpresaControler {
             return "No se ha eliminado la empresa";
         }
         return "Se eliminó la empresa con id: " + id;
+    }
+
+    @GetMapping("/empleados")
+    public List<Empleado> verEmpleados(){
+        return this.empleadoService.getAllEmpleados();
+    }
+
+    @PostMapping("/empleados")
+    public Optional<Empleado> guardarEmpleado(@RequestBody Empleado empleado){
+        return Optional.ofNullable(this.empleadoService.saveOrUpdateEmpleado(empleado));
+    }
+
+    @GetMapping("/empleados/{id}")
+    public Optional<Empleado> empleadoPorId(@PathVariable("id") Integer id){
+        return this.empleadoService.getEmpleadoById(id);
+    }
+
+    @GetMapping("/enterprises/{id}/empleados")
+    public ArrayList<Empleado> empleadosPorEmpresa(@PathVariable Integer id){
+        return this.empleadoService.obtenerPorEmpresa(id);
     }
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <title>Editar Empresa</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <style>
+            a{
+                color: white;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Agregue aquí los datos de la Empresa</h1>
+            <br/>
+            <form th:action="@{/ActualizarEmpresa}" method="post" th:object="${emp}">
+                <div class="form-group col-md-12">
+                    <label class="col-md-3" for="id">Id:</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="id" th:field="*{id}" required readonly>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-md-3" for="nombre">Nombre de la Empresa:</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-md-3" for="direccion">Dirección de la Empresa:</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="direccion" th:field="*{direccion}" required>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-md-3" for="telefono">Teléfono de la Empresa:</label>
+                    <div class="col-md-6">
+                        <input type="tel" class="form-control" id="telefono" th:field="*{telefono}" required>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-md-3" for="nit">Nit de la Empresa:</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="nit" th:field="*{nit}" required>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" >Editar Empresa</button>
+
+            </form>
+            <br/>
+            <a href="javascript: history.go(-1)" class="btn btn-info" role="button">Atras</a>
+        </div>
+    </body>
+</html>
