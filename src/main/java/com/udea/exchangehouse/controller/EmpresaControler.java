@@ -138,4 +138,14 @@ public class EmpresaControler {
         }
         return "No se ha eliminado correctamente el movimiento con id " + id;
     }
+
+    @GetMapping("/empleados/{id}/movimientos")
+    public ArrayList<MovimientoDinero> movimientosPorEmpleado(@PathVariable("id") Integer id){
+        return (ArrayList<MovimientoDinero>) this.movimientoService.obtenerPorEmpleado(id);
+    }
+
+    @GetMapping("/enterprises/{id}/movimientos")
+    public ArrayList<MovimientoDinero> movimientosPorEmpresa(@PathVariable("id") Integer id){
+        return (ArrayList<MovimientoDinero>) this.movimientoService.obtenerPorEmpresa(id);
+    }
 }

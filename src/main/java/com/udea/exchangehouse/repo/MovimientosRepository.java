@@ -10,9 +10,9 @@ import java.util.ArrayList;
 @Repository
 public interface MovimientosRepository extends JpaRepository<MovimientoDinero, Integer> {
 
-    @Query(value = "SELECT * FROM movimientos where empleado_id=?1", nativeQuery=true)
+    @Query(value = "SELECT * FROM movimiento where empleado_id=?1", nativeQuery=true)
     ArrayList<MovimientoDinero> findByEmpleado(Integer id);
 
-    @Query(value = "select * from movimientos where empleado_id in (select id from empleado where empresa_id=?1)", nativeQuery = true)
+    @Query(value = "select * from movimiento where empleado_id in (select id from empleado where empresa_id=?1)", nativeQuery = true)
     ArrayList<MovimientoDinero> findByEmpresa(Integer id);
 }

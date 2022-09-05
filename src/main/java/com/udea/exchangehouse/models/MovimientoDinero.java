@@ -3,11 +3,11 @@ package com.udea.exchangehouse.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Movimientos")
+@Table(name = "Movimiento")
 public class MovimientoDinero {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private long monto;
     private String concepto;
