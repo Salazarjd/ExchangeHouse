@@ -36,7 +36,7 @@ public class EmpresaControler {
     }
 
     @GetMapping("/enterprises/{id}")
-    public Empresa empresaPorId(@PathVariable("id") Integer id){
+    public Optional<Empresa> empresaPorId(@PathVariable("id") Integer id){
         return this.empresaService.getEmpresabyId(id);
     }
 
@@ -47,7 +47,7 @@ public class EmpresaControler {
 
     @PatchMapping("/enterprises/{id}")
     public Empresa actualizarEmpresa(@PathVariable("id") Integer id, @RequestBody Empresa empresa){
-        Empresa emp = this.empresaService.getEmpresabyId(id);
+        Empresa emp = this.empresaService.getEmpresabyId(id).get();
         emp.setNombre(empresa.getNombre());
         emp.setDireccion(empresa.getDireccion());
         emp.setTelefono(empresa.getTelefono());
