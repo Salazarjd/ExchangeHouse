@@ -34,7 +34,7 @@ public class EmpresaService {
 
     public boolean deleteEmpresa(Integer id){
         empresaRepository.deleteById(id);
-        if(getEmpresabyId(id) != null){
+        if(this.empresaRepository.findById(id).isPresent()){
             return false;
         }
         return true;

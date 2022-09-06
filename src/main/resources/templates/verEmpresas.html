@@ -60,7 +60,7 @@
     <script th:inline="javascript">
         window.onload=function(){
 
-            var msg= [[${mensaje}]];
+            let msg= [[${mensaje}]];
             if (msg == "saveOK"){
                 Command : toastr["success"]("Empresa creada con éxito!")
             }

@@ -3,7 +3,7 @@ package com.udea.exchangehouse.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Movimientos")
+@Table(name = "Movimiento")
 public class MovimientoDinero {
 
     @Id
