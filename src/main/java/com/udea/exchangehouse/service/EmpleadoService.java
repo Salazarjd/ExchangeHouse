@@ -27,8 +27,12 @@ public class EmpleadoService {
         return this.empleadoRepository.findByEmpresa(id);
     }
 
-    public Empleado saveOrUpdateEmpleado(Empleado empleado){
-        return this.empleadoRepository.save(empleado);
+    public boolean saveOrUpdateEmpleado(Empleado empleado){
+        Empleado empl = this.empleadoRepository.save(empleado);
+        if(this.empleadoRepository.findById(empl.getId()).isPresent()){
+            return true;
+        }
+        return false;
     }
 
     public boolean deteleEmpleado(Integer id){

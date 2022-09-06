@@ -14,6 +14,7 @@ public class EmpresaService {
     @Autowired
     EmpresaRepository empresaRepository;
 
+
     public List<Empresa> getAllEmpresas(){
         List<Empresa> empresaList = new ArrayList<>();
         empresaRepository.findAll().forEach(empresa -> empresaList.add(empresa));
@@ -39,4 +40,7 @@ public class EmpresaService {
         }
         return true;
     }
+
+    //Empleados
+
 }
