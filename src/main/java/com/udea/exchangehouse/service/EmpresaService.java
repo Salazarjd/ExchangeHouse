@@ -41,6 +41,5 @@ public class EmpresaService {
         return true;
     }
 
-    //Empleados
 
 }
