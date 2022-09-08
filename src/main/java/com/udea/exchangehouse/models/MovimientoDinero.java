@@ -1,6 +1,9 @@
 package com.udea.exchangehouse.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Movimiento")
@@ -9,19 +12,26 @@ public class MovimientoDinero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private long monto;
+
     private String concepto;
+
     @ManyToOne
     @JoinColumn(name = "empleado_id")
     private Empleado usuario;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha;
+
     public MovimientoDinero() {
     }
 
-    public MovimientoDinero(long monto, String concepto, Empleado empleado) {
+    public MovimientoDinero(long monto, String concepto, Empleado empleado, Date fecha) {
         this.monto = monto;
         this.concepto = concepto;
         this.usuario = empleado;
+        this.fecha = fecha;
     }
 
     public int getId() {
@@ -54,5 +64,13 @@ public class MovimientoDinero {
 
     public void setUsuario(Empleado usuario) {
         this.usuario = usuario;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

@@ -45,4 +45,16 @@ public class MovimientoService {
     public List<MovimientoDinero> obtenerPorEmpresa(Integer id){
         return this.movimientoRepository.findByEmpresa(id);
     }
+
+    public Long obtenerSuma(){
+        return this.movimientoRepository.sumarMonto();
+    }
+
+    public Long obtenerSumaPorEmpleado(Integer id){
+        return this.movimientoRepository.montosPorEmpleado(id);
+    }
+
+    public Long obtenerSumaPorEmpresa(Integer id){
+        return this.movimientoRepository.montosPorEmpresa(id);
+    }
 }
