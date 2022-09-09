@@ -3,10 +3,13 @@ package com.udea.exchangehouse.controller;
 import com.udea.exchangehouse.models.Empleado;
 import com.udea.exchangehouse.models.Empresa;
 import com.udea.exchangehouse.models.MovimientoDinero;
+import com.udea.exchangehouse.repo.MovimientoRepository;
 import com.udea.exchangehouse.service.EmpleadoService;
 import com.udea.exchangehouse.service.EmpresaService;
 import com.udea.exchangehouse.service.MovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,9 @@ public class EmpresaControler {
 
     @Autowired
     MovimientoService movimientoService;
+
+    @Autowired
+    MovimientoRepository movimientoRepository;
 
     @GetMapping({"/", "/VerEmpresas"})
     public String viewEmpresas(Model model, @ModelAttribute("mensaje") String mensaje){
@@ -150,9 +156,14 @@ public class EmpresaControler {
     //Movimientos
 
     @GetMapping("/VerMovimientos")
-    public String viewMovimientos(Model model, @ModelAttribute("mensaje") String mensaje){
-        List<MovimientoDinero> listaMovimientos = this.movimientoService.getAllMovimientos();
-        model.addAttribute("movlist", listaMovimientos);
+    public String viewMovimientos(@RequestParam(value = "pagina", required = false, defaultValue = "0") Integer numeroPagina,
+                                  @RequestParam(value = "medida", required = false, defaultValue = "2") Integer medida,
+                                  Model model, @ModelAttribute("mensaje") String mensaje){
+        Page<MovimientoDinero> paginaMovimientos = this.movimientoRepository.findAll(PageRequest.of(numeroPagina,medida));
+//        List<MovimientoDinero> listaMovimientos = this.movimientoService.getAllMovimientos();
+        model.addAttribute("movlist", paginaMovimientos.getContent());
+        model.addAttribute("paginas", new int[paginaMovimientos.getTotalPages()]);
+        model.addAttribute("paginaActual", numeroPagina);
         model.addAttribute("mensaje", mensaje);
         Long sumaMonto = this.movimientoService.obtenerSuma();
         model.addAttribute("sumaMontos", sumaMonto);
