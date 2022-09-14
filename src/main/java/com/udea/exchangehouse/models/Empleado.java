@@ -11,19 +11,23 @@ public class Empleado {
     private int id;
     private String nombre;
     private String email;
+    private String password;
     @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
     private String rol;
+    private boolean estado;
 
     public Empleado() {
     }
 
-    public Empleado(String nombre, String email, Empresa empresa, String rol) {
+    public Empleado(String nombre, String email, String password, Empresa empresa, String rol, boolean estado) {
         this.nombre = nombre;
         this.email = email;
+        this.password = password;
         this.empresa = empresa;
         this.rol = rol;
+        this.estado = estado;
     }
 
     public int getId() {
@@ -50,6 +54,14 @@ public class Empleado {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Empresa getEmpresa() {
         return empresa;
     }
@@ -64,5 +76,13 @@ public class Empleado {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 }

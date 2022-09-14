@@ -8,8 +8,11 @@ import com.udea.exchangehouse.service.EmpleadoService;
 import com.udea.exchangehouse.service.EmpresaService;
 import com.udea.exchangehouse.service.MovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -108,6 +111,8 @@ public class EmpresaControler {
 
     @PostMapping("/GuardarEmpleado")
     public String nuevoEmpleado(Empleado empl, RedirectAttributes redirectAttributes){
+        String passEncriptada = passwordEncoder().encode(empl.getPassword());
+        empl.setPassword(passEncriptada);
         if(this.empleadoService.saveOrUpdateEmpleado(empl)){
             redirectAttributes.addFlashAttribute("mensaje", "saveOK");
             return "redirect:/VerEmpleados";
@@ -128,6 +133,8 @@ public class EmpresaControler {
 
     @PostMapping("/ActualizarEmpleado")
     public String updateEmpleado(@ModelAttribute("empl") Empleado empl, RedirectAttributes redirectAttributes){
+        String passEncriptada = passwordEncoder().encode(empl.getPassword());
+        empl.setPassword(passEncriptada);
         if(this.empleadoService.saveOrUpdateEmpleado(empl)){
             redirectAttributes.addFlashAttribute("mensaje", "updateOK");
             return "redirect:/VerEmpleados";
@@ -236,6 +243,14 @@ public class EmpresaControler {
         Long sumaMonto = this.movimientoService.obtenerSumaPorEmpresa(id);
         model.addAttribute("sumaMontos", sumaMonto);
         return "verMovimientos";
+    }
+
+
+
+    //Método para encriptar contraseña
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 }
