@@ -20,6 +20,7 @@
   <body>
 
   <div class="container">
+    <p th:inline="text" class="text-right">User: [[${#httpServletRequest.remoteUser}]]</p>
     <h1> Modifique aqui los datos del Movimiento</h1>
     <br>
     <!--Crear formulario para llenar los datos del movimiento y guardarlo en el objeto mov -->

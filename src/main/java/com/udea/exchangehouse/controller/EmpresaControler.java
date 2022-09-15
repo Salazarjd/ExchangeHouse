@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -133,14 +135,19 @@ public class EmpresaControler {
 
     @PostMapping("/ActualizarEmpleado")
     public String updateEmpleado(@ModelAttribute("empl") Empleado empl, RedirectAttributes redirectAttributes){
-        String passEncriptada = passwordEncoder().encode(empl.getPassword());
-        empl.setPassword(passEncriptada);
-        if(this.empleadoService.saveOrUpdateEmpleado(empl)){
-            redirectAttributes.addFlashAttribute("mensaje", "updateOK");
+        Integer id=empl.getId(); //Sacamos el id del objeto empl
+        String Oldpass=empleadoService.getEmpleadoById(id).get().getPassword(); //Con ese id consultamos la contraseña que ya esta en la base
+        if(!empl.getPassword().equals(Oldpass)){
+            String passEncriptada=passwordEncoder().encode(empl.getPassword());
+            empl.setPassword(passEncriptada);
+        }
+        if(empleadoService.saveOrUpdateEmpleado(empl)){
+            redirectAttributes.addFlashAttribute("mensaje","updateOK");
             return "redirect:/VerEmpleados";
         }
-        redirectAttributes.addFlashAttribute("mensaje", "updateError");
-        return "redirect:/EditarEmpleado/" + empl.getId();
+        redirectAttributes.addFlashAttribute("mensaje","updateError");
+        return "redirect:/EditarEmpleado/"+empl.getId();
+
     }
 
     @GetMapping("/EliminarEmpleado/{id}")
@@ -182,8 +189,11 @@ public class EmpresaControler {
         MovimientoDinero mov = new MovimientoDinero();
         model.addAttribute("mov", mov);
         model.addAttribute("mensaje", "mensaje");
-        List<Empleado> listaEmpleados = this.empleadoService.getAllEmpleados();
-        model.addAttribute("emplelist", listaEmpleados);
+//        List<Empleado> listaEmpleados = this.empleadoService.getAllEmpleados();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        Integer idEmpleado = this.movimientoService.idPorEmail(email);
+        model.addAttribute("idEmpleado", idEmpleado);
         return "agregarMovimiento";
     }
 
@@ -251,6 +261,11 @@ public class EmpresaControler {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @RequestMapping("/Denegado")
+    public String accesoDenegado(){
+        return "accessDenied";
     }
 
 }

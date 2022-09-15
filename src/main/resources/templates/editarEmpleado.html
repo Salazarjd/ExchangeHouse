@@ -20,6 +20,7 @@
 <body>
 
 <div class="container">
+  <p th:inline="text" class="text-right">User: [[${#httpServletRequest.remoteUser}]]</p>
   <h1> Actualice aqui los datos del Empleado</h1>
   <br>
   <!--Crear formulario para llenar los datos de la empresa y guardarlo en el objeto emp -->
@@ -57,7 +58,7 @@
       <div class="form-group col-md-12">
         <label class="col-md-3" for="password">Contraseña del empleado:</label>
         <div class="col-md-6">
-          <input type="password" th:field="*{password}" class="form-control" id="password"></div>
+          <input type="text" th:field="*{password}" class="form-control" id="password"></div>
       </div>
     </div>
 
@@ -111,5 +112,10 @@
   <a href="javascript: history.go(-1)" class="btn btn-info" role="button">Atrás</a>
 
 </div>
+<script th:inline="javascript">
+  window.onload=function (){
+    document.getElementById("password").type="password"
+  }
+</script>
 </body>
 </html>

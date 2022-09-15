@@ -57,4 +57,8 @@ public class MovimientoService {
     public Long obtenerSumaPorEmpresa(Integer id){
         return this.movimientoRepository.montosPorEmpresa(id);
     }
+
+    public Integer idPorEmail(String email){
+        return this.movimientoRepository.idPorCorreo(email);
+    }
 }

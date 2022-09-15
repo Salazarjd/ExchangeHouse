@@ -20,6 +20,7 @@
   <body>
 
   <div class="container">
+    <p th:inline="text" class="text-right">User: [[${#httpServletRequest.remoteUser}]]</p>
     <h1> Agregue aqui los datos de Empresa</h1>
     <br>
     <!--Crear formulario para llenar los datos de la empresa y guardarlo en el objeto emp -->
