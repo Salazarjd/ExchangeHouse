@@ -30,6 +30,10 @@ public class Empleado {
         this.estado = estado;
     }
 
+    public Empleado(String email){
+        this.email = email;
+    }
+
     public int getId() {
         return id;
     }

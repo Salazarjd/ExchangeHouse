@@ -10,4 +10,6 @@ public interface EmpleadoRepository extends CrudRepository<Empleado, Integer> {
 
     @Query(value = "select * from empleado where empresa_id=?1", nativeQuery = true)
     ArrayList<Empleado> findByEmpresa(Integer id);
+
+    Empleado findByEmail(String email);
 }

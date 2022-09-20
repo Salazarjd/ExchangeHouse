@@ -10,18 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 public class ExchangeHouseApplication {
 
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hola ciclo 3..... saldremos vivos de esto";
-    }
-
-    @GetMapping("/test")
-    public String test(){
-        Empresa emp = new Empresa("Solar SAS", "Calle larga", "3133987877", "89912231-1");
-        emp.setNombre("Solar LTDA");
-        return emp.getNombre();
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(ExchangeHouseApplication.class, args);
     }
